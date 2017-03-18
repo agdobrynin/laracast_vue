@@ -20,24 +20,11 @@
         <div class="form-group col-md-2">
             <div class="form-group">
                 <label for="newname">Добавить новое имя в список:</label>
-                <input type="text" name="" id="newname" value="" class="form-control">
+                <input v-model="newName" type="text" name="" id="newname" value="" class="form-control">
             </div>
-            <button id="addname" class="btn btn-primary">Добавить в список</button>
+            <button v-on:click="addNewName" id="addname" class="btn btn-primary">Добавить в список</button>
         </div>
      </div>
-
-     <div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-      <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-               <h4 class="modal-title" id="gridSystemModalLabel">Внимание!</h4>
-             </div>
-             <div class="modal-body">
-             </div>
-        </div>
-      </div>
-    </div>
 
     <script src="https://unpkg.com/vue@2.1.4/dist/vue.js" charset="utf-8"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -46,19 +33,22 @@
         let app = new Vue({
             el: "#root",
             data: {
+                newName: '',
                 names: ['Добрынин', 'Иванов', 'Петров']
             },
-            mounted(){
-                document.querySelector('#addname').addEventListener('click', function(){
-                    let name = document.querySelector('#newname');
-                    if( name.value.replace(/\s/g,'') !== '' ){
-                        app.names.push(name.value);
-                    }else{
-                        $('#myModal .modal-body').html('<p>Необходимо ввести имя</p>');
-                        $('#myModal').modal('show')
+
+            methods:{
+                addNewName() {
+                    if( this.newName == ''){
+                        return alert('Введите значение');
                     }
-                    name.value = '';
-                })
+                    this.names.push(this.newName);
+                    this.newName = '';
+                }
+            },
+
+            mounted(){
+
             }
         });
     </script>
