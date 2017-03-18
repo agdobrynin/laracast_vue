@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title></title>
+    <style>
+        .null{background-color: transparent;}
+        .blue{background-color: blue;}
+    </style>
+  </head>
+  <body>
+      <div id="root">
+          <button :title="CaptionTitle">Click me</button>
+          <h1 :class="{ 'blue' : isOn }" @mouseover="toggleClass" @mouseout="toggleClass">My title here</h1>
+      </div>
+     <script src="https://unpkg.com/vue@2.1.4/dist/vue.js" charset="utf-8"></script>
+     <script>
+        var app = new Vue({
+            el: "#root",
+            data:{
+                ClassName: 'null',
+                isOn: false,
+                CaptionTitle: 'Some title here throught JS'
+            },
+            methods: {
+                toggleClass(){
+                    this.isOn = this.isOn == true ? false : true;
+                }
+            }
+        });
+     </script>
+
+  </body>
+</html>
