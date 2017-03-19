@@ -5,30 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Timer</title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.1.0/octicons.min.css">
-
-    <!--[if lt IE 9]>
-      <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <style>
+     #root li{cursor: pointer;}
+     #root li:hover{color: red;}
+     #root li.complite{text-decoration: line-through;}
+    </style>
   </head>
   <body>
     <div id="root">
         <h1>Все задачи</h1>
         <ul>
-            <li v-for="task in tasks" v-text="task.description"></li>
+            <li
+                v-for="task in tasks"
+                v-text="task.description"
+                :class="{ 'complite' : task.complited  }"
+                v-on:click="SetComplite"></li>
         </ul>
         <h2>Не законченные задачи</h2>
         <ul>
-            <li v-for="task in incompliteTask" v-text="task.description"></li>
+            <li
+                v-for="task in incompliteTask"
+                v-text="task.description"
+                v-on:click="SetComplite"></li>
         </ul>
     </div>
      <script src="https://unpkg.com/vue@2.1.4/dist/vue.js" charset="utf-8"></script>
-    <script src="https://cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
     <script>
     let app = new Vue({
         el: "#root",
@@ -39,6 +40,14 @@
                 {description: 'Проверить почту', complited: true},
                 {description: 'Убрать комнату', complited: false},
             ]
+        },
+        methods:{
+            SetComplite(event){
+                console.log(event.target)
+            },
+            isComplite(){
+
+            }
         },
         computed:{
             incompliteTask(){
