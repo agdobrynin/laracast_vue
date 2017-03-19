@@ -38,9 +38,9 @@
                                     v-on:click="SetComplite(index, $event)"
                                     type="button" class="btn btn-link btn-xs">
                                   <span :class="[{
-                                      'glyphicon-ok' : task.complited,
                                       'glyphicon' : true,
-                                      'glyphicon-minus' : task.complited == false
+                                      'glyphicon-ok' : task.complited,
+                                      'glyphicon-minus' : !task.complited
                                   }]" aria-hidden="true"></span>
                                   <!-- glyphicon  -->
                                 </button>
