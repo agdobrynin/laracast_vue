@@ -10,10 +10,21 @@ Vue.component('message',{
 });
 
 Vue.component('alert',{
-    props:['title', 'body', 'alertclass'],
+    // props:['title', 'body', 'alertclass'],
+    props: {
+        title: String,
+        body: {
+            type: String,
+            required: true
+        },
+        alertclass: {
+          type: String,
+          default: 'alert-info'
+        }
+    },
     data(){
         return{
-            isVisible: true
+            isVisible: true,
         }
     },
     mounted() {
@@ -24,7 +35,7 @@ Vue.component('alert',{
             this.isVisible = false
         }
     },
-    template:`<div :class="this.alertclass" class="alert alert-info" v-show="isVisible">
+    template:`<div :class="this.alertclass" class="alert" v-show="isVisible">
     <button type="button" class="close" @click="isVisible = false"><span>&times;</span></button>
     <strong>{{ title }}</strong> {{ body }}
     <div class="container">
