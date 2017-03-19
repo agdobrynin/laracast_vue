@@ -13,20 +13,13 @@
   </head>
   <body>
     <div id="root">
-        <h1>Все задачи</h1>
+        <h1>Задачи</h1>
         <ul>
             <li
-                v-for="task in tasks"
+                v-for="(task, index) in tasks"
                 v-text="task.description"
                 :class="{ 'complite' : task.complited  }"
-                v-on:click="SetComplite"></li>
-        </ul>
-        <h2>Не законченные задачи</h2>
-        <ul>
-            <li
-                v-for="task in incompliteTask"
-                v-text="task.description"
-                v-on:click="SetComplite"></li>
+                v-on:click="SetComplite(index, $event)"></li>
         </ul>
     </div>
      <script src="https://unpkg.com/vue@2.1.4/dist/vue.js" charset="utf-8"></script>
@@ -42,17 +35,10 @@
             ]
         },
         methods:{
-            SetComplite(event){
-                console.log(event.target)
-            },
-            isComplite(){
+            SetComplite(index, event){
+                this.tasks[index].complited = this.tasks[index].complited == false;
+            }
 
-            }
-        },
-        computed:{
-            incompliteTask(){
-                return this.tasks.filter( (task) => ! task.complited );
-            }
         }
 
     });
