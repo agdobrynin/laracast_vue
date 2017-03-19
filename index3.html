@@ -4,24 +4,76 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Timer</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <title>Todo list</title>
     <style>
      #root li{cursor: pointer;}
      #root li:hover{color: red;}
-     #root li.complite{text-decoration: line-through;}
+     #root .complite{text-decoration: line-through;}
     </style>
   </head>
   <body>
-    <div id="root">
-        <h1>Задачи</h1>
-        <ul>
-            <li
-                v-for="(task, index) in tasks"
-                v-text="task.description"
-                :class="{ 'complite' : task.complited  }"
-                v-on:click="SetComplite(index, $event)"></li>
-        </ul>
+    <div id="root" class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="table-responsive">
+                    <h1>Задачи</h1>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>#</th><th colspan="3">Задача</th>
+                        </tr>
+                        <tr v-for="(task, index) in tasks">
+                            <td>
+                                {{ index + 1 }}
+                            </td>
+                            <td :class="{ 'complite' : task.complited  }">{{ task.description }}</td>
+                            <td>
+                                <button
+                                    title="Отметить задачу"
+                                    v-on:click="SetComplite(index, $event)"
+                                    type="button" class="btn btn-link btn-xs">
+                                  <span :class="[{
+                                      'glyphicon-ok' : task.complited,
+                                      'glyphicon' : true,
+                                      'glyphicon-minus' : task.complited == false
+                                  }]" aria-hidden="true"></span>
+                                  <!-- glyphicon  -->
+                                </button>
+                            </td>
+                            <td>
+                                <button
+                                    title="Удалить задачу"
+                                    v-on:click="DeleteTask(index, $event)"
+                                    type="button" class="btn btn-link btn-xs">
+                                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2>Добавить новую задачу</h2>
+                <form class="" @submit.prevent="AddTask($event)">
+                    <div class="form-group">
+                      <label for="">Название задачи:</label>
+                      <input type="text" name="newTask" class="form-control" id="newTask" placeholder="">
+                      <p class="help-block">Описание задачи для списка.</p>
+                    </div>
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-primary">Добавить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
      <script src="https://unpkg.com/vue@2.1.4/dist/vue.js" charset="utf-8"></script>
     <script>
     let app = new Vue({
@@ -35,8 +87,32 @@
             ]
         },
         methods:{
+            /**
+             * Клик чтобы установить выполено / не выполнено
+             */
             SetComplite(index, event){
                 this.tasks[index].complited = this.tasks[index].complited == false;
+            },
+            /**
+             * Клик чтобы удалить задачу из списк
+             */
+            DeleteTask(index, event){
+                if( confirm(`Удалить из списка задач?\n${this.tasks[index].description}`) ){
+                    this.tasks.splice(index,1);
+                }
+            },
+            /**
+             * На сабмит формы
+             */
+            AddTask(event){
+                let newTask = event.target.newTask;
+                if( newTask.value !== ''){
+                     this.tasks.push({description: newTask.value, complited: false});
+                 }else{
+                     newTask.focus();
+                     return alert('Необходимо ввести значение!');
+                }
+                newTask.value = '';
             }
 
         }
