@@ -26,7 +26,7 @@ Vue.component('tabs', {
     methods:{
         selectTab( event , selectedTab ){
             this.tabs.forEach( function( tab ){
-                tab.isActive = (tab.href == selectedTab.href);
+                tab.isActive = (tab.href === selectedTab.href);
             });
         }
     }
@@ -47,7 +47,7 @@ Vue.component('tab', {
         }
     },
     template: `
-        <div v-show="isActive">
+        <div v-show="isActive" class="content">
             <slot></slot>
         </div>
     `,
