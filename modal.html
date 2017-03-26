@@ -26,13 +26,18 @@
 
 <body>
 
-    <div id="root">
+    <div id="root" class="container">
 
         <modal v-if="showModal" @closemymodal="showModal = false">
             <p slot="title">Some title here...</p>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <div slot="footer">
+                <button type="button" class="btn btn-success" @click="showModal = false">Close</button>
+            </div>
         </modal>
-        <button type="button" @click="showModal = true" name="button">Show modal</button>
+        <div class="row"><div class="col-md-12">
+            <button type="button" class="btn btn-primary" @click="showModal = true" name="button">Show modal</button>
+        </div></div>
 
 
     </div>

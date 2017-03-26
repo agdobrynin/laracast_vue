@@ -1,11 +1,11 @@
 Vue.component('modal',{
     template: `
-    <div class="modal fade in" id="" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display:block">
+    <div class="modal fade in" style="display:block">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="$emit('closemymodal')">&times;</button>
-            <h4 class="modal-title" id="">
+            <button type="button" class="close" @click="$emit('closemymodal')">&times;</button>
+            <h4 class="modal-title">
                 <slot name="title"></slot>
             </h4>
           </div>
@@ -13,7 +13,9 @@ Vue.component('modal',{
             <slot></slot>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" @click="$emit('closemymodal')">Close</button>
+            <slot name="footer"><div>
+                <button type="button" class="btn btn-primary" @click="$emit('closemymodal')">Close</button>
+            </div></slot>
           </div>
         </div>
       </div>
