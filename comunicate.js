@@ -1,19 +1,40 @@
+window.Event = new class{
+
+    constructor()
+    {
+        this.vue = new Vue();
+    }
+
+    fire( event, data = null )
+    {
+        this.vue.$emit(event, data);
+    }
+
+    liten( event, callback )
+    {
+        this.vue.$on(event, callback);
+    }
+
+}
+
 Vue.component('coupon',{
     template:`
         <input placeholder="Ведите номер купона" @blur="onCouponApplied">
     `,
     methods:{
         onCouponApplied(){
-            this.$emit('applied');
+            Event.fire('applied', this);
         }
     }
 });
 
 new Vue({
     el: "#root",
-    methods:{
-        onCouponApplied(){
-            alert('Купон применен');
-        }
-    }
+    data:{
+        couponApplied: false
+    },
+    created(){
+        Event.liten('applied', () => alert('it applied!'));
+    },
+
 })
